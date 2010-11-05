@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+lang="en" xml:lang="en">
+<head>
+<title>notes.org</title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2010-10-31 日"/>
+<meta name="author" content="tangyi"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+
+<h1 class="title">notes.org</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Git</a>
+<ul>
+<li><a href="#sec-1.1">1.1 git add </a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2 emacs</a>
+<ul>
+<li><a href="#sec-2.1">2.1 important mode </a></li>
+<li><a href="#sec-2.2">2.2 mode line </a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3 useful shortcut</a>
+<ul>
+<li><a href="#sec-3.1">3.1 tc </a></li>
+<li><a href="#sec-3.2">3.2 emacs </a>
+<ul>
+<li><a href="#sec-3.2.1">3.2.1 org </a></li>
+<li><a href="#sec-3.2.2">3.2.2 register </a></li>
+<li><a href="#sec-3.2.3">3.2.3 C++ </a></li>
+</ul></li>
+</ul>
+</li>
+<li><a href="#sec-4">4 sed,grep,awk</a>
+<ul>
+<li><a href="#sec-4.1">4.1 re </a></li>
+<li><a href="#sec-4.2">4.2 </a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5 Hadoop</a></li>
+<li><a href="#sec-6">6 perl</a></li>
+<li><a href="#sec-7">7 LaTex </a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Git &nbsp;&nbsp;&nbsp;<span class="tag"><span class="git">git</span></span></h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1.1" class="outline-3">
+<h3 id="sec-1.1"><span class="section-number-3">1.1</span> git add </h3>
+<div class="outline-text-3" id="text-1.1">
+
+<p>这是一个多功能命令，根据文件的状态不同，执行效果也不同<br/>
+</p><ol>
+<li>
+开始跟踪新文件<br/>
+</li>
+<li>
+把己跟踪文件放到暂存区<br/>
+</li>
+<li>
+把有冲突的文件标记为已经解决状态<br/>
+
+<p><br/>
+</p></li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> emacs &nbsp;&nbsp;&nbsp;<span class="tag"><span class="emacs">emacs</span></span></h2>
+<div class="outline-text-2" id="text-2">
+
+
+</div>
+
+<div id="outline-container-2.1" class="outline-3">
+<h3 id="sec-2.1"><span class="section-number-3">2.1</span> important mode </h3>
+<div class="outline-text-3" id="text-2.1">
+
+<ol>
+<li>
+cc mode<br/>
+</li>
+<li>
+org mode<br/>
+</li>
+<li>
+cperl mode<br/>
+</li>
+<li>
+dired &amp;&amp; dired-x<br/>
+</li>
+<li>
+gud<br/>
+</li>
+<li>
+yasnippet <br/>
+<ul>
+<li>
+is not build-in emacs now, so you must install it by yourself.<br/>
+</li>
+</ul>
+</li>
+<li>
+linum<br/>
+</li>
+<li>
+ido<br/>
+</li>
+<li>
+gtags or etags<br/>
+</li>
+</ol>
+</div>
+
+</div>
+
+<div id="outline-container-2.2" class="outline-3">
+<h3 id="sec-2.2"><span class="section-number-3">2.2</span> mode line </h3>
+<div class="outline-text-3" id="text-2.2">
+
+<p>When you are using a character-only terminal (not a window system),<br/>
+CS uses three characters to describe, respectively, the coding system<br/>
+for keyboard input, the coding system for terminal output, and the<br/>
+coding system used for the file you are editing.<br/>
+</p>
+<p><br/>
+</p></div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> useful shortcut &nbsp;&nbsp;&nbsp;<span class="tag"><span class="shortcuts">shortcuts</span></span></h2>
+<div class="outline-text-2" id="text-3">
+
+
+</div>
+
+<div id="outline-container-3.1" class="outline-3">
+<h3 id="sec-3.1"><span class="section-number-3">3.1</span> tc </h3>
+<div class="outline-text-3" id="text-3.1">
+
+<ul>
+<li>
+Ctrl+Shift+F, close ftp connect<br/>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-3.2" class="outline-3">
+<h3 id="sec-3.2"><span class="section-number-3">3.2</span> emacs </h3>
+<div class="outline-text-3" id="text-3.2">
+
+
+</div>
+
+<div id="outline-container-3.2.1" class="outline-4">
+<h4 id="sec-3.2.1"><span class="section-number-4">3.2.1</span> org </h4>
+<div class="outline-text-4" id="text-3.2.1">
+
+<ul>
+<li>
+C-c @ <br/>
+select entry to export<br/>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-3.2.2" class="outline-4">
+<h4 id="sec-3.2.2"><span class="section-number-4">3.2.2</span> register </h4>
+<div class="outline-text-4" id="text-3.2.2">
+
+<ul>
+<li>
+C-x r w &lt;Register&gt;<br/>
+save frame state to Register<br/>
+</li>
+<li>
+C-x r Spc &lt;Register&gt;<br/>
+save current postion to Register<br/>
+</li>
+<li>
+Cx r j &lt;Register&gt;<br/>
+jump back<br/>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-3.2.3" class="outline-4">
+<h4 id="sec-3.2.3"><span class="section-number-4">3.2.3</span> C++ </h4>
+<div class="outline-text-4" id="text-3.2.3">
+
+<ul>
+<li>
+C-M-e , C-M-a, <br/>
+goto end/start of current function, <br/>
+</li>
+<li>
+C-c C-q <br/>
+indent current function<br/>
+</li>
+<li>
+C-M-h<br/>
+select whole function<br/>
+</li>
+<li>
+M-;<br/>
+comment current line<br/>
+
+<p><br/>
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> sed,grep,awk &nbsp;&nbsp;&nbsp;<span class="tag"><span class="gogo">gogo</span></span></h2>
+<div class="outline-text-2" id="text-4">
+
+<p><span class="timestamp-wrapper"><span class="timestamp-kwd">DEADLINE: </span> <span class="timestamp">2010-10-11 一</span></span><br/><br/>
+</p>
+</div>
+
+<div id="outline-container-4.1" class="outline-3">
+<h3 id="sec-4.1"><span class="section-number-3">4.1</span> re </h3>
+<div class="outline-text-3" id="text-4.1">
+
+<p>一般都是BRE,即得用\(,\),\{,\},\1<br/>
+</p></div>
+
+</div>
+
+<div id="outline-container-4.2" class="outline-3">
+<h3 id="sec-4.2"><span class="section-number-3">4.2</span> </h3>
+<div class="outline-text-3" id="text-4.2">
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Hadoop &nbsp;&nbsp;&nbsp;<span class="tag"><span class="hadoop">hadoop</span></span></h2>
+<div class="outline-text-2" id="text-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> perl &nbsp;&nbsp;&nbsp;<span class="tag"><span class="perl">perl</span></span></h2>
+<div class="outline-text-2" id="text-6">
+
+</div>
+
+</div>
+
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> LaTex </h2>
+<div class="outline-text-2" id="text-7">
+
+</div>
+</div>
+<div id="postamble">
+<p class="author"> Author: tangyi
+<a href="mailto:tangyi@taobao.com">&lt;tangyi@taobao.com&gt;</a>
+</p>
+<p class="date"> Date: 2010-10-31 日</p>
+<p class="creator">HTML generated by org-mode 6.33x in emacs 23</p>
+</div>
+</div>
+</body>
+</html>
