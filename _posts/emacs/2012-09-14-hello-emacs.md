@@ -9,3 +9,14 @@ tags: [emacs, tutorial]
 
     emacs
     C-h t
+    
+{% highlight perl %}
+
+use Getopt::Std;
+
+sub hello()
+{
+    print "hello, world\n";
+}
+
+{% endhighlight %}
