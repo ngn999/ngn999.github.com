@@ -6,5 +6,5 @@ tags: [emacs, tutorial]
 
 ### emacs 入门
 
->emacs
+>emacs  
 >C-h t
