@@ -1,8 +1,8 @@
 safe:        true 
 auto:        false
 server:      false
-server_port: 80
-baseurl:    http://tangyi.github.com/
+server_port: 4000
+baseurl:    http://tangyi.github.com
 url: http://tangyi.github.com
 
 source:      .
