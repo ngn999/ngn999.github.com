@@ -22,3 +22,10 @@ sub hello()
 }
 
 {% endhighlight %}
+
+it's `cool`!
+
+### 一些图片
+
+![oh girl!](/images/girl.jpg "oh girl!")
+
