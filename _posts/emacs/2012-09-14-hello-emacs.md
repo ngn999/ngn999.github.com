@@ -1,6 +1,7 @@
 ---
 layout: post
 category: emacs
+tags: [emacs, tutorial]
 ---
 
 ### emacs 入门
