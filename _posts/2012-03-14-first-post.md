@@ -1,5 +1,8 @@
 ---
 date: 2012-03-14 13:07:09
+title: 测试页
+category: test
+tags: test,md
 ---
 
 under default configuration, this post should get processed by the  
