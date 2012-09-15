@@ -7,6 +7,8 @@ tags: [git, resolve, conflict]
 ---
 {% include JB/setup %}
 
+* * *
+
 ### 非快速式推送 (non-fast-forward push)
 
 
