@@ -18,6 +18,7 @@ use Getopt::Std;
 
 sub hello()
 {
+    my $name = 'ngn';
     print "hello, world\n";
 }
 
