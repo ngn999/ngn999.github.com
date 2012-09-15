@@ -9,10 +9,13 @@ tags: [git, resolve, conflict]
 
 ### 非快速式推送 (non-fast-forward push)
 
+
+* * *
 ### 解决过程
 
-合并后推送
 
+合并后推送
+* * * 
 ### 发生冲突时,快速查看冲突
 
 {% highlight bash %}
