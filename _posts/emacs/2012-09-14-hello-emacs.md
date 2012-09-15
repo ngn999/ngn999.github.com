@@ -18,7 +18,8 @@ use Getopt::Std;
 
 sub hello()
 {
-    print "hello, world\n";
+    my $name = shift;
+    print "hello, $name\n";
 }
 
 {% endhighlight %}
