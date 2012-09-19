@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 首页
+title: Home
 tagline: Supporting tagline
 ---
 {% include JB/setup %}
