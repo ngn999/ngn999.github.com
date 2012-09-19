@@ -12,7 +12,7 @@ tags: [emacs, tutorial]
 
 ### 一些perl代码
 
-{% highlight perl %}
+{% highlight perl linenos %}
 
 use Getopt::Std;
 

@@ -9,7 +9,7 @@ tags: [git, resolve, conflict]
 
 * * *
 
-### 非快速式推送 (non-fast-forward push)
+### 非快速式推送 (`non-fast-forward push')
 
 
 * * *
@@ -28,3 +28,7 @@ tags: [git, resolve, conflict]
     git diff --base      # pull后, 与共同祖先版本的差别
     git diff --ours      # pull后, 与我自己的版本的差别
 {% endhighlight %}
+
+### 树冲突
+
+两个用户同时对一个文件进行了重命令, 但名字不一样. 这就是树冲突.
