@@ -356,10 +356,18 @@ pre:hover {
 	border-right: none;
 	overflow: visible;
 }
+/* code { */
+/* 	font-size: 1em; */
+/* 	background-color: #f7f7ff; */
+/* 	line-height: 1.4em; */
+/* } */
 code {
-	font-size: 1em;
-	background-color: #f7f7ff;
-	line-height: 1.4em;
+        margin: 0 2px;
+        padding: 0px 5px;
+        white-space: nowrap;
+        border: 1px solid #EAEAEA;
+        background-color: #F8F8F8;
+        border-radius: 3px;
 }
 pre > code {
 	background-color: transparent;
