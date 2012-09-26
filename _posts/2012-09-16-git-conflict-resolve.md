@@ -9,7 +9,7 @@ tags: [git, resolve, conflict]
 
 * * *
 
-### 非快速式推送 (`non-fast-forward push')
+### 非快速式推送 (`non-fast-forward push`)
 
 
 * * *
