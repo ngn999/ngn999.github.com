@@ -79,11 +79,11 @@ JB :
   # Set 'provider' to false to turn commenting off globally.
   #
   comments :
-    provider : disqus
+    provider : livefyre
     disqus :
       short_name : tangyi-github-page
     livefyre :
-      site_id : 123
+      site_id : 323171
     intensedebate :
       account : 123abc
     facebook :
