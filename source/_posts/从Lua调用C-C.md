@@ -12,6 +12,8 @@ tags:
 
 Lua调用C，就是用Lua的C API写一个动态链接库，给Lua程序用。下面看个简单的样例，用C写了个adder函数，返回一个C closure。
 
+<!-- more -->
+
 ```C
 #include <lua.h>
 #include <lauxlib.h>
