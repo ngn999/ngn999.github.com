@@ -2,7 +2,9 @@
 menu:
   Home: /
   Archives: /archives
-rss: /atom.xml
+
+# 先禁用吧
+# rss: /atom.xml
 
 # Content
 excerpt_link: Read More
