@@ -102,7 +102,4 @@ deploy:
   repo: git@github.com:ngn999/ngn999.github.com.git
   branch: master
 
-disqus:
-  enable: true
-  shortname: tangyi-github-page
-  count: true
+disqus_shortname: tangyi-github-page
