@@ -1,0 +1,36 @@
+<% if(theme.vendors.jquery_js){ %>
+<%- js(theme.vendors.jquery_js) %>
+<% }else{ %>
+<%- js('lib/jquery/jquery.js')%>
+<% } %>
+
+<% if(theme.fancybox){ %>
+<% if(theme.vendors.fancybox_js){ %>
+<%- js(theme.vendors.fancybox_js) %>
+<% }else{ %>
+<%- js('lib/fancybox/fancybox.js')%>
+<% }} %>
+
+<% if(theme.pjax){ %>
+<% if(theme.vendors.pjax_js){ %>
+<%- js(theme.vendors.pjax_js) %>
+<% }else{ %>
+<%- js('lib/pjax/pjax.js')%>
+<% }} %>
+
+<% if(theme.highlight){ %>
+<% if(theme.vendors.highlight_js){ %>
+<%- js(theme.vendors.highlight_js) %>
+<% }else{ %>
+<%- js('lib/highlight/highlight.js')%>
+<% }} %>
+
+<% if(theme.leancloud.enable){ %>
+<%- partial('_partial/common/visitors') %>
+<% } %>
+
+<%- js(['js/script']) %>
+
+<% if(theme.custom.foot) { %>
+<%- theme.custom.foot  %>
+<% } %>

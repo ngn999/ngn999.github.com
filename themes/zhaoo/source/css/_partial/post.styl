@@ -1,0 +1,158 @@
+.article
+  max-width 700px
+  margin 45px auto
+  box-shadow $color-shadow
+  @media (max-width: 576px)
+    margin 0
+  .head
+    position relative
+    .head-mask
+      position absolute
+      bottom 0
+      width 100%
+      background linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75))
+      padding 30px
+      .head-title
+        color $color-white
+        font-size 2em
+      .head-info
+        color $color-white
+        margin-top 10px
+        .post-info-item
+          margin-right 10px
+          i
+            font-size 1em
+            margin-right 5px
+  .main
+    padding 30px
+    .content
+      line-height 2
+      color $color-middle
+      for $i in 1 .. 6
+        h{$i}
+          font-size 1.6 - $i * 0.1 em
+          margin-bottom 1em
+          margin-top 2em
+          color $color-default
+          font-weight bold
+      code
+        font-size 1em
+        background-color $color-background-deep
+        padding 2px 5px
+        border-radius 2px
+        color $color-link
+      a
+        text-decoration underline !important
+      kbd
+        padding 0.2em 0.4em
+        font-size 87.5%
+        color $color-background
+        background-color $color-default
+        border-radius 0.2em
+      figure
+        color $color-default
+        margin 0
+        overflow auto
+        > *
+          border-spacing 0px
+        .gutter
+          display none
+        table, pre
+          margin 0
+      table
+        margin 10px auto
+        min-width 100%
+      blockquote
+        margin 0 0 1em
+        padding 15px 20px
+        background-color $color-background-deep
+        border-left 3px solid $color-link
+        border-left-width 6px
+        p
+          margin 0
+  .extra
+    margin-top 50px
+    .donate
+      display block
+      text-align center
+      margin-bottom 20px
+      position relative
+      .qrcode
+        padding 10px
+        width 200px
+        height 200px
+        box-shadow $color-shadow
+        position absolute
+        left calc(50% - 100px)
+        bottom 70px
+        z-index 10
+        display none
+        img
+          position absolute
+          top 0
+          left 0
+          display block
+      .icon
+        position relative
+        display inline-block
+        border 1px solid #E0E0E0
+        background-color #FFFFFF
+        border-radius 2em
+        padding 8px 16px
+        z-index 20
+        a, i
+          font-size 1.25em
+        #alipay:hover
+          color #108EE9
+        #wechat:hover
+          color #09BB07
+        #alipay
+          padding-right 8px
+          border-right 1px solid #E0E0E0
+        #wechat
+          padding-left 8px
+    .tag-list
+      padding 0 0 1em 0
+      border-bottom #DDDDDD dashed 1px
+      .tag-list-item
+        display inline-block
+        list-style-type none
+        margin-right 1em
+        padding 5px 10px
+        background-color $color-background-deep
+      .tag-list-item:hover
+        cursor pointer
+        background-color $color-link
+        transition $transition
+        a
+          color $color-white
+    .nav
+      margin-top 1em
+      display flex
+      justify-content space-between
+      i
+        font-size 1em
+  .comment
+    margin-top 50px
+    .btn
+      display block
+      padding 10px
+      background-color $color-background-deep
+      text-align center
+    .btn:hover
+      background-color $color-link
+      color $color-white
+      transition $transition
+      cursor pointer
+    .gitalk-container, .gt-header-textarea, .gt-btn
+      border-radius 0 !important
+    .gt-avatar
+      img
+        border-radius 50% !important
+        transition $transition
+      img:hover
+        -webkit-transform rotate(180deg)
+        -moz-transform rotate(180deg)
+        -ms-transform rotate(180deg)
+        -o-transform rotate(180deg)
+        transition $transition

@@ -1,0 +1,83 @@
+# Menu
+menu:
+  # home: / || 首页
+  # archives: /archives || 归档
+  # about: /about || 关于
+
+# Social
+social:
+  # qq: tencent://message/?Menu=yes&uin=894519210 || iconQQ
+  # wechat: javascript:; || iconwechat-fill
+  # email: mailto:izhaoo@163.com || iconmail
+  # instagram: https://www.instagram.com/izhaoo/ || iconinstagram
+
+# Color
+color:
+  default:
+  link:
+
+# Donate
+donate:
+  alipay:
+  wechat:
+
+# Preview
+preview:
+  enable:
+  model:
+
+# 文章封面图片
+post_image:
+
+# 欢迎图片
+welcome_image:
+
+# Favicon
+favicon:
+
+# 网站关键字
+keywords:
+
+# 版权信息
+copyright:
+
+# 格言
+motto:
+  api:
+  default:
+
+# 插件
+fancybox:
+pjax:
+highlight:
+
+# CDN
+vendors:
+  jquery_js:
+  fancybox_js:
+  highlight_js:
+  pjax_js:
+  fancybox_css:
+  highlight_css:
+  iconfont_css:
+
+# Gitalk
+gitalk:
+  enable:
+  owner:
+  repo:
+  admin:
+  clientID:
+  clientSecret:
+
+# LeanCloud
+leancloud:
+  enable:
+  appId:
+  appKey:
+  serverURLs:
+
+# Custom
+custom:
+  head:
+  foot:

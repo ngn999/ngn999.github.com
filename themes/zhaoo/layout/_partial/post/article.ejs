@@ -1,0 +1,18 @@
+<article class="article">
+  <%- partial('_partial/post/head') %>
+  <section class="main">
+    <section class="content">
+      <%- page.content %>
+    </section>
+    <section class="extra">
+      <% if (theme.donate.alipay || theme.donate.wechat) { %>
+        <%- partial('_partial/post/donate') %>
+      <% } %>
+      <%- partial('_partial/post/tag') %>
+      <%- partial('_partial/post/nav') %>
+    </section>
+    <% if (theme.gitalk.enable) { %>
+    <%- partial('_partial/common/comment') %>
+    <% } %>
+  </section>
+</article>
