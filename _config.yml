@@ -100,4 +100,4 @@ theme: landscape
 deploy:
   type: git
   repo: git@github.com:ngn999/ngn999.github.com.git
-  branch: gh-pages
+  branch: master
