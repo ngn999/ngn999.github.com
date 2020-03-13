@@ -2,6 +2,8 @@
 title: 从Lua调用C/C++
 date: 2014-07-01 11:31:58
 tags:
+  - lua
+  - C/C++
 ---
 
 先说从Lua调用C代码。
