@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-30033117-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  <title>从Lua调用C/C++ | ngn Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先说从Lua调用C代码。 Lua调用CLua调用C，就是用Lua的C API写一个动态链接库，给Lua程序用。下面看个简单的样例，用C写了个adder函数，返回一个C closure。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Lua调用C&#x2F;C++">
+<meta property="og:url" content="http://ngn999.github.io/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/index.html">
+<meta property="og:site_name" content="ngn Page">
+<meta property="og:description" content="先说从Lua调用C代码。 Lua调用CLua调用C，就是用Lua的C API写一个动态链接库，给Lua程序用。下面看个简单的样例，用C写了个adder函数，返回一个C closure。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-02T11:31:58.000Z">
+<meta property="article:modified_time" content="2020-03-25T14:37:51.240Z">
+<meta property="article:author" content="ngn">
+<meta property="article:tag" content="lua">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@ngn">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script data-ad-client="ca-pub-5435507565877937" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">ngn Page</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ngn999.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-从Lua调用C-C" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/" class="article-date">
+  <time datetime="2014-07-02T11:31:58.000Z" itemprop="datePublished">Jul 2 2014</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      从Lua调用C/C++
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先说从Lua调用C代码。</p>
+<h2 id="Lua调用C"><a href="#Lua调用C" class="headerlink" title="Lua调用C"></a>Lua调用C</h2><p>Lua调用C，就是用Lua的C API写一个动态链接库，给Lua程序用。下面看个简单的样例，用C写了个adder函数，返回一个C closure。</p>
+<a id="more"></a>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;lua.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;lauxlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> _do_adder(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">double</span> base = lua_tonumber(L, lua_upvalueindex(<span class="number">1</span>));</span><br><span class="line">    <span class="keyword">double</span> to_add = luaL_checknumber(L, <span class="number">1</span>);</span><br><span class="line">    lua_pushnumber(L, base + to_add);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> _adder(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">double</span> base = luaL_checknumber(L, <span class="number">1</span>);</span><br><span class="line">    lua_pushvalue(L, <span class="number">1</span>);</span><br><span class="line">    lua_pushcclosure(L, _do_adder, <span class="number">1</span>);  <span class="comment">/* 1 upvalue */</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;                           <span class="comment">/* the c closure */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span></span><br><span class="line">luaopen_add(lua_State *L)</span><br><span class="line">&#123;</span><br><span class="line">    luaL_checkversion(L);</span><br><span class="line">    </span><br><span class="line">    luaL_Reg l[] = &#123;</span><br><span class="line">        &#123;<span class="string">"adder"</span>, _adder&#125;,</span><br><span class="line">        &#123;<span class="literal">NULL</span>,  <span class="literal">NULL</span>&#125;,</span><br><span class="line">    &#125;;</span><br><span class="line">    luaL_newlib(L,l);</span><br><span class="line">    luaL_setfuncs(L, l, <span class="number">0</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;                           <span class="comment">/* 返回一个结果，一个table */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译这个so的Makefile:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS = -g -O0 -Wall -I. -I /usr/local/<span class="keyword">include</span> </span><br><span class="line">LDFLAGS = -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup</span><br><span class="line"></span><br><span class="line"><span class="section">all:  add.so</span></span><br><span class="line"></span><br><span class="line"><span class="section">add.so: lua-hello.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$(LDFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span>  </span><br><span class="line">&#123;% endhighlight %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成<code>add.so</code>后，可以从lua代码里调用了：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c = <span class="built_in">require</span> <span class="string">"add"</span></span><br><span class="line"><span class="keyword">local</span> addTwo = c.adder(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(addTwo(<span class="number">3</span>))                <span class="comment">-- 5</span></span><br></pre></td></tr></table></figure>
+
+<p>add.so的入口在<code>luaopen_add()</code>,在require(“add”)时，就会加载add.so,并执行<code>luaopen_add()</code>,这个函数将<code>_adder()</code>注册到lua。返回了一个table(Lua里一切都是table), table里有一个<code>adder()</code>函数。</p>
+<p>C, Lua混编，用一个Stack来交换数据，上面用到的 <code>luaL_checknumber()</code> <code>lua_pushvalue()</code>第二参数都是这个Stack的索引。</p>
+<p>Lua只能调用lua_CFunction类型的C函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(*lua_CFunction)</span> <span class="params">(lua_State *L)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>C函数从L里取参数，处理，将结果push进L。</p>
+<p>Lua和C最大的不同在于：Lua无类型，Lua有GC；此外，还得留心错误处理。</p>
+<p>实际使用时，如果<strong>add.so</strong>不在默认的搜索路径里，可以设置<code>LUA_CPATH</code>，这个环境变量的格式参见 <a href="http://www.lua.org/manual/5.2/manual.html#pdf-package.path" target="_blank" rel="noopener">Lua手册</a>。</p>
+<h2 id="Lua调用C-–-wrapper"><a href="#Lua调用C-–-wrapper" class="headerlink" title="Lua调用C++ – wrapper"></a>Lua调用C++ – wrapper</h2><p>Lua的api是C，文档，书上也都是在说怎么在Lua里调用C，很少谈到Lua调用C++，C++对象和Lua对象的方法，变量没法一一对应。要想从Lua里调用C++的成员方法，得写一层C的wrapper, 有点lua调用C，C调用C++的意思。</p>
+<p>还是来看个实例,我们有一个C++类：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sum</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">sum</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>很简单,就一个成员方法,给两个 <code>double</code>,返回他们的和。</p>
+<p>为了在Lua里使用这个类，先来写一个so:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Sum.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;lua.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Sum_sum</span><span class="params">(lua_State* L)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">Sum_new</span><span class="params">(lua_State* L)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">luaopen_sum</span><span class="params">(lua_State* L)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">Sum_sum(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    Sum** ud = (Sum**)lua_touserdata(L, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">double</span> a = luaL_checknumber(L, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">double</span> b = luaL_checknumber(L, <span class="number">3</span>);</span><br><span class="line">    <span class="keyword">double</span> c = (*ud)-&gt;sum(a, b);</span><br><span class="line">    lua_pushnumber(L, c);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">Sum_new(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    Sum** ud = <span class="keyword">static_cast</span>&lt;Sum**&gt;(lua_newuserdata(L, <span class="keyword">sizeof</span>(Sum*)));</span><br><span class="line">    *ud =  <span class="keyword">new</span> Sum;                     <span class="comment">// ... obj</span></span><br><span class="line">    luaL_getmetatable(L, <span class="string">"Sum"</span>);        <span class="comment">// ... obj mt</span></span><br><span class="line">    lua_setmetatable(L, <span class="number">-2</span>);            <span class="comment">// ... obj</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span></span><br><span class="line">Sum_index(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    lua_settop(L, <span class="number">2</span>);                   <span class="comment">// obj key</span></span><br><span class="line">    lua_getmetatable(L, <span class="number">-2</span>);            <span class="comment">// obj key mt</span></span><br><span class="line">    lua_pushvalue(L, <span class="number">-2</span>);               <span class="comment">// obj key mt k</span></span><br><span class="line">    lua_gettable(L, <span class="number">-2</span>);                <span class="comment">// obj key mt[k]</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span></span><br><span class="line">luaopen_sum(lua_State* L)</span><br><span class="line">&#123;</span><br><span class="line">    luaL_checkversion(L);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> luaL_Reg  table[]  = &#123;</span><br><span class="line">        &#123;<span class="string">"new"</span>, Sum_new&#125;,</span><br><span class="line">        &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">const</span> luaL_Reg metatable[] = &#123;</span><br><span class="line">        &#123;<span class="string">"sum"</span>, Sum_sum&#125;,</span><br><span class="line">        &#123;<span class="string">"__index"</span>, Sum_index&#125;,</span><br><span class="line">        &#123;<span class="literal">NULL</span>, <span class="literal">NULL</span>&#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// table, static method</span></span><br><span class="line">    lua_newtable(L);</span><br><span class="line">    luaL_setfuncs(L, table, <span class="number">0</span>);         <span class="comment">// ... T</span></span><br><span class="line"></span><br><span class="line">    lua_setglobal(L, <span class="string">"Sum"</span>);            <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// mt, instance method</span></span><br><span class="line">    luaL_newmetatable(L, <span class="string">"Sum"</span>);</span><br><span class="line">    luaL_setfuncs(L, metatable, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// lua_setfield(L, -2, "metatable");</span></span><br><span class="line">    lua_pop(L, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个so做的事就是，定义了一个Lua的全局table <code>Sum</code>,将类的构造函数，static方法放进去，再将类的实例方法放到一个叫做”Sum”的metatable里。</p>
+<p>构造函数new一个C++的Sum类，将指针存到lua里的userdata, 并为这个新生成的userdata指定metatable.</p>
+<p>编译这个so的Makefile:</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS = -g -O0 -Wall -I. -I /usr/local/<span class="keyword">include</span> </span><br><span class="line">LDFLAGS = -fPIC -dynamiclib -Wl,-undefined,dynamic_lookup</span><br><span class="line">LIBS = -ldl -llua</span><br><span class="line">CXX = g++</span><br><span class="line"></span><br><span class="line"><span class="section">all:  sum.so</span></span><br><span class="line"></span><br><span class="line"><span class="section">sum.so: lua-Sum.cpp</span></span><br><span class="line">	<span class="variable">$(CXX)</span> <span class="variable">$(CFLAGS)</span> <span class="variable">$(LDFLAGS)</span> <span class="variable">$^</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
+
+<p>在Lua里测试一下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">"sum"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">local</span> abc = Sum.new()</span><br><span class="line"><span class="built_in">print</span>(abc)</span><br><span class="line"><span class="keyword">local</span> mt = <span class="built_in">getmetatable</span>(abc)</span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">pairs</span>(mt) <span class="keyword">do</span> </span><br><span class="line">   <span class="built_in">print</span>(k, v)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">print</span>(abc:sum(<span class="number">40</span>, <span class="number">2</span>))            <span class="comment">-- 42</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的例子太过简单，而且很多地方是ad hoc，如果要在真实C++项目里使用Lua, 可以考虑使用一些方便的C++ Lua绑定库,这里有一个这类库的<a href="http://lua-users.org/wiki/BindingCodeToLua" target="_blank" rel="noopener">列表</a>。上面实例主要参照其中的<a href="https://bitbucket.org/alexames/luawrapper" target="_blank" rel="noopener">luawrapper库</a>实现。</p>
+<p>这里只说到lua调用C/C++, 真实的项目里，一般是C/C++(host程序)调用Lua(脚本), Lua里再调用C (给Lua写的so), so里再调用lua(callback函数)。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ngn999.github.io/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/" data-id="ck87fn8rb00000xmgggt9g4c3" class="article-share-link">Share</a>
+      
+        <a href="http://ngn999.github.io/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lua/" rel="tag">lua</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-C/" rel="tag">C/C++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lua/" rel="tag">lua</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/C-C/" style="font-size: 10px;">C/C++</a> <a href="/tags/lua/" style="font-size: 10px;">lua</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/">从Lua调用C/C++</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 ngn<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'tangyi-github-page';
+  
+  var disqus_url = 'http://ngn999.github.io/2014/07/02/%E4%BB%8ELua%E8%B0%83%E7%94%A8C-C/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.setAttribute('data-timestamp', +new Date());
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
