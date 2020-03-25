@@ -1,0 +1,21 @@
+name: Hexo Build and Deploy
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1.1.2
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+      - uses: yrpang/github-actions-hexo@v1.1
+        with:
+          deploykey: ${{secrets.DEPLOY_KEY}}
+          username: ngn999
+          email: ngn998@gmail.com
